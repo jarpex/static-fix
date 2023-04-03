@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22
+        font-size=%2290%22>💫</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StaticFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gentium+Plus&display=swap" rel="stylesheet">
+  <script type="application/javascript" src="./src/work.ts"></script>
+</head>
+
+<body>
+  <div id="app" class="my-0 mx-auto max-w-xl py-6 px-6 text-center text-[#2c3e50] selection:bg-pink-100">
+    <div id="notifications" class="fixed top-5 right-5">
+
+    </div>
+    <h1 class="select-none font-gentium text-7xl lg:text-8xl mt-8">
+      💫 StaticFix
+    </h1>
+    <div class="flex items-center flex-col">
+      <div class="block max-w-lg mt-14 mb-5 pb-5 bg-gray-100 border border-gray-200 rounded-2xl shadow 
+        dark:bg-gray-700 dark:border-gray-700">
+        <img id="image" class="block select-none rounded-t-2xl" src="./src/assets/placeholder-image.png" />
+        <span class="block mt-5 select-none text-xl">Preview</span>
+      </div>
+      <button onclick="fix();" class="h-14 w-full lg:w-[32rem] bg-violet-300 hover:bg-violet-200 text-gray-800 py-2 px-4 border-none
+        rounded-2xl transition-all duration-200 font-golosMedium font-normal text-lg text-[#2c3e50]">
+        Исправить!
+      </button>
+    </div>
+    <p class="my-6 max-w-screen-sm">
+      For Firefox, make sure to turn&nbsp;on <code><a class="cursor-pointer break-all"
+          onclick="copyInnerText(this);">dom.events.asyncClipboard.readText</a></code>
+      and&nbsp;<code><a class="cursor-pointer break-all"
+          onclick="copyInnerText(this);">dom.events.testing.asyncClipboard</a></code>
+      in&nbsp;
+      <code><a class="cursor-pointer break-all" onclick="copyInnerText(this);">about:config</a></code>
+      <br>
+      <a target="_blank" class="mt-6 mb-[-1rem] block" href="//jarpex.ru">Powered by Jarpex</a>
+      <br>
+      Copyright © 2023
+    </p>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
