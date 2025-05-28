@@ -1,20 +1,21 @@
 const onTextRead = (text: string, image: HTMLImageElement | null) => {
-  const isUsingSftp = text.match('^sftp://') !== null;
+  const staticRegex = /^(sftp|ftp):\/\/[^\/]+\/static\/(.*)$/;
 
-  if (isUsingSftp === false) {
-    notify('🔐 Invalid SFTP source');
+  const match = text.match(staticRegex);
+
+  if (!match) {
+    notify('🔐 Invalid SFTP or FTP source');
     if (image !== null) {
-      image.src = './src/assets/placeholder-image.png';
+      image.src = 'placeholder-image.png';
     }
     return;
   }
 
-  const staticRegex = /sftp:\/\/.*.selcdn.ru\/static\//;
-  const staticUrl = text.replace(staticRegex, 'https://static.mebbr.ru/');
+  const staticUrl = `https://static.mebbr.ru/${match[2]}`;
   if (isValidUrl(staticUrl) === false) {
     notify('😔 Invalid URL');
     if (image !== null) {
-      image.src = './src/assets/placeholder-image.png';
+      image.src = 'placeholder-image.png';
     }
     return;
   }
@@ -28,9 +29,10 @@ const onTextRead = (text: string, image: HTMLImageElement | null) => {
   setTimeout(clearNotifications, 3000);
 };
 
-const fix = () => {
+export const fix = () => {
   const image = document.getElementById('image') as HTMLImageElement | null;
-  navigator.clipboard.readText()
+  navigator.clipboard
+    .readText()
     .then((text) => onTextRead(text, image))
     .catch(console.error);
 };
@@ -45,12 +47,11 @@ const isValidUrl = (urlString: string): boolean => {
   return true;
 };
 
-const notify = (text: string) => { 
+const notify = (text: string) => {
   const notificationArea = document.getElementById('notifications');
   if (notificationArea === null) return;
 
-  notificationArea.innerHTML += 
-`<div id="toast-danger" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+  notificationArea.innerHTML += `<div id="toast-danger" class="flex items-center w-full max-w-s p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
   <div class="mr-3 text-xl font-normal">${text}</div>
   <button onclick="return this.parentNode.remove();" type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
     <span class="sr-only">Close</span>
@@ -72,3 +73,5 @@ const copyInnerText = (e) => {
 
   setTimeout(clearNotifications, 3000);
 };
+
+(window as any).fix = fix;
